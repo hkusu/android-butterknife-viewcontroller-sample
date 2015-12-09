@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">TODOリスト</string>
+    <string name="button_create">登録</string>
+    <string name="button_delete">削除</string>
+    <string name="label_count">件数：</string>
+</resources>

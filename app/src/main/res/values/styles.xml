@@ -1,0 +1,11 @@
+<resources>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/mediumOrange</item>
+        <item name="colorPrimaryDark">@color/deepOrange</item>
+        <item name="android:textColorPrimary">@color/deepOrange</item>
+        <item name="android:windowBackground">@color/lightOrange</item>
+        <item name="android:textColor">@color/deepOrange</item>
+        <item name="colorButtonNormal">@color/mediumOrange</item>
+        <item name="colorAccent">@color/accentPink</item>
+    </style>
+</resources>
