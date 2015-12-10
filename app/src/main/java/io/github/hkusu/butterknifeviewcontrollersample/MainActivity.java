@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     /** Todoデータ表示用ListViewにセットするListAdapter */
     private TodoListAdapter mTodoListAdapter;
     /** ユーザイベントをハンドリングするController */
-    private UserEventViewController<MainActivity> mUserEventViewController;
+    private UserEventViewController mUserEventViewController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         // Controllerを作成
-        mUserEventViewController = new UserEventViewController<>(this); // parentとしてこのActivityを設定(利用しなければnullでもよい)
+        mUserEventViewController = new UserEventViewController(this); // parentとしてこのActivityを設定(利用しなければnullでもよい)
         mUserEventViewController.onCreate(this); // ButterKnife
     }
 

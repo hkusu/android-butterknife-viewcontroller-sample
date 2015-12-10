@@ -17,7 +17,7 @@ import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import butterknife.OnTextChanged;
 
-public class UserEventViewController<T> extends ButterKnifeViewController<T> {
+public class UserEventViewController extends ButterKnifeViewController<Activity> {
 
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
@@ -33,9 +33,9 @@ public class UserEventViewController<T> extends ButterKnifeViewController<T> {
     /**
      * コンストラクタ
      *
-     * @param parent Activity
+     * @param parent 利用元のActivity
      */
-    public UserEventViewController(@Nullable T parent) {
+    public UserEventViewController(@Nullable Activity parent) {
         super(parent);
     }
 
@@ -91,10 +91,10 @@ public class UserEventViewController<T> extends ButterKnifeViewController<T> {
      */
     @MainThread
     private void registerTodo() {
-        if (getParent() == null || !(getParent() instanceof Activity)) {
+        Activity activity = getParent();
+        if (activity == null) {
             return;
         }
-        Activity activity = (Activity) getParent();
 
         // Todoデータを作成
         TodoEntity todoEntity = new TodoEntity();
