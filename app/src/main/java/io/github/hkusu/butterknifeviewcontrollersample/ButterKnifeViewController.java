@@ -14,11 +14,16 @@ public class ButterKnifeViewController<T> {
     private WeakReference<T> mParentRef;
 
     protected ButterKnifeViewController(@Nullable T parent) {
-        mParentRef = new WeakReference<T>(parent);
+        if (parent != null) {
+            mParentRef = new WeakReference<>(parent);
+        }
     }
 
     @Nullable
     protected T getParent() {
+        if (mParentRef == null) {
+            return null;
+        }
         return mParentRef.get();
     }
 
