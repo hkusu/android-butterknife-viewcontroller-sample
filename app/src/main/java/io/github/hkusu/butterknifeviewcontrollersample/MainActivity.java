@@ -63,7 +63,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        // ViewControllerのライフサイクルメソッド(Listenerをセットしたい場合のみ実装)
+        // ViewControllerのライフサイクルメソッド(ViewController側でやらせたい処理がある場合 or Listenerを設定したい場合のみ)
+        // Listenerを設定しない場合は .onStart(null) とする
         mUserEventViewController.onStart(new UserEventViewController.Listener() {
             @Override
             public void onCreateButtonClick() {

@@ -18,7 +18,7 @@ import butterknife.OnEditorAction;
 import butterknife.OnTextChanged;
 
 public class UserEventViewController extends ButterKnifeViewController<UserEventViewController.Listener> {
-// MEMO：parentやlistenerを設定しない場合はVoid
+// NOTE：Listenerを設定しない場合は ButterKnifeViewController<Void> とする
 
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
@@ -31,10 +31,7 @@ public class UserEventViewController extends ButterKnifeViewController<UserEvent
     @Bind(R.id.todoListView)
     ListView mTodoListView;
 
-    //TODO
-    // Linstener使わないパターンも動作確認
-    // いちおう MainActivityからジェネリクスでLinstern指定するのもやってみる（結局キャストとか必要そうだけど
-
+    // Listenerを設定して呼び出し元にコールバックしたい場合のみ
     public interface Listener {
         void onCreateButtonClick();
         void onDeleteButtonClick();
