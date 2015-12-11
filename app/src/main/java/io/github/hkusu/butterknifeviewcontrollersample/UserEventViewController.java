@@ -37,6 +37,14 @@ public class UserEventViewController extends ButterKnifeViewController<UserEvent
         void onDeleteButtonClick();
     }
 
+    // もしなにかViewControllerに渡したい場合は、
+    //   コンストラクタを実装して渡す or
+    //   Listenerにgetter的なメソッドを用意する or
+    //   Activityにgetterを用意する or
+    //   本ViewControllerにsetterを用意する 等
+    //public UserEventViewController() {
+    //}
+
     @Override
     public void onStart(@Nullable Listener listener) {
         super.onStart(listener);
