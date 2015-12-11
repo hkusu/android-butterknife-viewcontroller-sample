@@ -56,6 +56,6 @@ public class ButterKnifeViewController<T> {
     public void onDestroy() {
         ButterKnife.unbind(this);
         mActivityRef = null;
-        mListenerRef = null;
+        mListenerRef = null; // onStopで処理したいがそのためにコールさせるのは冗長なので
     }
 }
