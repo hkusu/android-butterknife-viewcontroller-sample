@@ -17,7 +17,8 @@ import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import butterknife.OnTextChanged;
 
-public class UserEventViewController extends ButterKnifeViewController<Activity> {
+public class UserEventViewController extends ButterKnifeViewController<UserEventViewController.Listener> {
+// MEMO：parentやlistenerを設定しない場合はVoid
 
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
@@ -30,17 +31,18 @@ public class UserEventViewController extends ButterKnifeViewController<Activity>
     @Bind(R.id.todoListView)
     ListView mTodoListView;
 
-    /**
-     * コンストラクタ
-     *
-     * @param parent 利用元のActivity
-     */
-    public UserEventViewController(@Nullable Activity parent) {
-        super(parent);
+    //TODO
+    // Linstener使わないパターンも動作確認
+    // いちおう MainActivityからジェネリクスでLinstern指定するのもやってみる（結局キャストとか必要そうだけど
+
+    public interface Listener {
+        void onCreateButtonClick();
+        void onDeleteButtonClick();
     }
 
     @Override
-    public void onStart() {
+    public void onStart(@Nullable Listener listener) {
+        super.onStart(listener);
         mCreateButton.setEnabled(false); // 初期は[登録]ボタンを非活性に
     }
 
@@ -64,6 +66,12 @@ public class UserEventViewController extends ButterKnifeViewController<Activity>
         }
         // Todoデータを登録
         registerTodo();
+
+        // Activityに[登録]ボタンが押下されたことを通知してみるテスト
+        Listener listener = getListener();
+        if (listener != null) {
+            getListener().onCreateButtonClick();
+        }
     }
 
     /**
@@ -91,7 +99,7 @@ public class UserEventViewController extends ButterKnifeViewController<Activity>
      */
     @MainThread
     private void registerTodo() {
-        Activity activity = getParent();
+        Activity activity = getActivity();
         if (activity == null) {
             return;
         }
@@ -118,5 +126,11 @@ public class UserEventViewController extends ButterKnifeViewController<Activity>
     public void onEvent(TodoListAdapter.DeleteButtonClickedEvent event) {
         // データ操作モデルを通して削除
         TodoModel.getInstance().removeById(event.getId());
+
+        // Activityに[削除]ボタンが押下されたことを通知してみるテスト
+        Listener listener = getListener();
+        if (listener != null) {
+            getListener().onDeleteButtonClick();
+        }
     }
 }

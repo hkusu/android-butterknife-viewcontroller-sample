@@ -2,6 +2,7 @@ package io.github.hkusu.butterknifeviewcontrollersample;
 
 import android.app.Activity;
 import android.support.annotation.CallSuper;
+import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -11,28 +12,39 @@ import butterknife.ButterKnife;
 
 public class ButterKnifeViewController<T> {
 
-    private WeakReference<T> mParentRef;
+    private WeakReference<Activity> mActivityRef;
+    private WeakReference<T> mListenerRef;
 
-    protected ButterKnifeViewController(@Nullable T parent) {
-        if (parent != null) {
-            mParentRef = new WeakReference<>(parent);
+    @Nullable
+    @CheckResult
+    protected Activity getActivity() {
+        if (mActivityRef == null) {
+            return null;
         }
+        return mActivityRef.get();
     }
 
     @Nullable
-    protected T getParent() {
-        if (mParentRef == null) {
+    @CheckResult
+    protected T getListener() {
+        if (mListenerRef == null) {
             return null;
         }
-        return mParentRef.get();
+        return mListenerRef.get();
     }
 
     @CallSuper
     public void onCreate(@NonNull Activity activity) {
         ButterKnife.bind(this, activity);
+        mActivityRef = new WeakReference<>(activity);
     }
 
-    protected void onStart() {}
+    @CallSuper
+    protected void onStart(@Nullable T listener) {
+        if (listener != null) {
+            mListenerRef = new WeakReference<>(listener);
+        }
+    }
 
     protected void onResume() {}
 
@@ -43,6 +55,7 @@ public class ButterKnifeViewController<T> {
     @CallSuper
     public void onDestroy() {
         ButterKnife.unbind(this);
-        mParentRef = null;
+        mActivityRef = null;
+        mListenerRef = null;
     }
 }

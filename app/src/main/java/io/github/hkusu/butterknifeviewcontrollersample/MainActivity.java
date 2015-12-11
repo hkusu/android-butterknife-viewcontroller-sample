@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.MainThread;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,8 +30,8 @@ public class MainActivity extends AppCompatActivity {
 
     /** Todoデータ表示用ListViewにセットするListAdapter */
     private TodoListAdapter mTodoListAdapter;
-    /** ユーザイベントをハンドリングするController */
-    private UserEventViewController mUserEventViewController;
+    /** ユーザイベントをハンドリングするViewController */
+    private UserEventViewController mUserEventViewController = new UserEventViewController();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,15 +55,26 @@ public class MainActivity extends AppCompatActivity {
         // 起動時にソフトウェアキーボードが表示されないようにする
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
-        // Controllerを作成
-        mUserEventViewController = new UserEventViewController(this); // parentとしてこのActivityを設定(利用しなければnullでもよい)
-        mUserEventViewController.onCreate(this); // ButterKnife
+        // ViewControllerのライフサイクルメソッド
+        mUserEventViewController.onCreate(this);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        mUserEventViewController.onStart();
+
+        // ViewControllerのライフサイクルメソッド(Listenerをセットしたい場合のみ実装)
+        mUserEventViewController.onStart(new UserEventViewController.Listener() {
+            @Override
+            public void onCreateButtonClick() {
+                Log.d("button", "create button clicked.");
+            }
+            @Override
+            public void onDeleteButtonClick() {
+                Log.d("button", "delete button clicked.");
+            }
+        });
+
         // 画面の初期表示
         updateView();
     }
@@ -85,7 +97,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this); // ButterKnife
-        mUserEventViewController.onDestroy(); // ButterKnife
+
+        // ViewControllerのライフサイクルメソッド
+        mUserEventViewController.onDestroy();
     }
 
     /**
