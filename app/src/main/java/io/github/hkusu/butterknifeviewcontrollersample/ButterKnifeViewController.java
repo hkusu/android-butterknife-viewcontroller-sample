@@ -17,7 +17,7 @@ public class ButterKnifeViewController<T> {
 
     @Nullable
     @CheckResult
-    protected Activity getActivity() {
+    protected final Activity getActivity() {
         if (mActivityRef == null) {
             return null;
         }
@@ -26,7 +26,7 @@ public class ButterKnifeViewController<T> {
 
     @Nullable
     @CheckResult
-    protected T getListener() {
+    protected final T getListener() {
         if (mListenerRef == null) {
             return null;
         }
@@ -40,7 +40,7 @@ public class ButterKnifeViewController<T> {
     }
 
     @CallSuper
-    protected void onStart(@Nullable T listener) {
+    public void onStart(@Nullable T listener) {
         if (listener != null) {
             mListenerRef = new WeakReference<>(listener);
         }
