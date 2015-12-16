@@ -135,7 +135,7 @@ public class UserEventViewController extends ButterKnifeViewController<UserEvent
         // Activityに[削除]ボタンが押下されたことを通知してみるテスト
         Listener listener = getListener();
         if (listener != null) {
-            getListener().onDeleteButtonClick();
+            listener.onDeleteButtonClick();
         }
     }
 }
